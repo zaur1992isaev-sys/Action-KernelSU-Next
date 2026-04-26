@@ -1,0 +1,14 @@
+name: StandoffFix
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: |
+          git clone --depth=1 https://github.com -b lineage-21 kernel
+          cd kernel
+          find . -name "*touchpanel_common.c*" -exec sed -i 's/sample_rate = [0-9]*/sample_rate = 240/g' {} +
+          echo "Патч тача готов!"
